@@ -15,9 +15,9 @@ def findMaxElf(fname='calorie_list.txt',namefile = 'elf_names.txt'):
 	cwdir = os.getcwd()
 	if os.path.exists(cwdir+'/'+namefile):
 		f2 = open(cwdir+'/'+namefile)
-		elf_names = f2.readlines()
+		elf_names = [l.strip() for l in f2.readlines()]
 	else:
-		n=strCalList.count('')+1
+		n=strCalList.count('\n')+1
 		if n==1:
 			totalcal = sum([int(l) for l in strCalList])
 			return ['first elf',totalcal]
@@ -27,14 +27,14 @@ def findMaxElf(fname='calorie_list.txt',namefile = 'elf_names.txt'):
 			elf_names = ['1st elf','2nd elf','3rd elf'] + ['{}th elf'.format(i) for i in range(4,n)]
 	maxInd=0
 	for l in strCalList:
-		if l=='':
+		if l=='\n':
 			if (len(intCalList) > 1 and intCalList[-1]>intCalList[maxInd]):
 				maxInd = len(intCalList) -1
 			intCalList += [0]
 		else:
-			lst[-1] += int(l)
+			intCalList[-1] += int(l)
 	return [elf_names[maxInd],intCalList[maxInd]]
 
 if __name__ == "__main__":
-	findMaxElf()#enter alternative file names here, if applicable
+	print(findMaxElf())#enter alternative file names here, if applicable
 
